@@ -21,3 +21,5 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
     console.log("Ecom Backend listening");
 })
+
+require("./routes/products.route")(app);

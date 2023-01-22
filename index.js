@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const app = express();
-
+path = require("path");
+global.__basedir = __dirname;
 const db = require("./models");
 
 app.use(bodyParser.json());
@@ -21,5 +22,8 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
     console.log("Ecom Backend listening");
 })
+
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "/uploads")));
 
 require("./routes/products.route")(app);

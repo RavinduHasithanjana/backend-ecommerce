@@ -1,40 +1,57 @@
 const db = require("../models");
 const Products = db.products;
 const Op = db.Sequelize.Op;
+const uploadFile = require("../middleware/upload");
 
 // Create and Save a new student
 
-exports.create = (req, res) => {
+exports.create = async(req, res) => {
   // Validate request
 
-  const company = {
-    company_id: req.body.company_id,
-    company_name: req.body.company_name
+  try {
+    await uploadFile(req, res);
 
-  };
+    if (req.file == undefined) {
+      return res.status(400).send({ message: "Please upload a file!" });
+    }
 
-  // Save student in the database
-  Products.create(company)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the student.",
+    const products = {
+      product_name: req.body.product_name,
+      product_description: req.body.product_description,
+      product_img: req.file.originalname,
+      product_qty: req.body.product_qty,
+      product_price: req.body.product_price
+
+    };
+
+    // Save student in the database
+    Products.create(products)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the products.",
+        });
       });
+
+  } catch (err) {
+    res.status(500).send({
+      message: `Could not upload the file: ${req.file.originalname}. ${err}`,
     });
+  }
 };
 
 exports.findAll = (req, res) => {
-    Products.findAll()
+  Products.findAll()
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving students.",
+          err.message || "Some error occurred while retrieving products.",
       });
     });
 };

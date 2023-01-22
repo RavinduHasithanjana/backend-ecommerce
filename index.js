@@ -24,6 +24,9 @@ app.listen(3009, () => {
 })
 
 app.use(bodyParser.json());
+
+// Exposing the upload document in order to get the image
 app.use(express.static(path.join(__dirname, "/uploads")));
 
+// importing the routes to the index.js file
 require("./routes/products.route")(app);

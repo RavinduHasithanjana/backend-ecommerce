@@ -5,6 +5,7 @@ module.exports = (app) => {
   
     app.use(cors());
   
+    // Cros issue is handles 
     app.use(function (req, res, next) {
       res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
       res.header(
@@ -18,7 +19,10 @@ module.exports = (app) => {
       next();
     });
   
+    // GET request to get All Products in DB
     router.get("/", products.findAll);
+
+    // POST request to create a new Product
     router.post("/add", products.create);
   
     app.use("/api/products", router);

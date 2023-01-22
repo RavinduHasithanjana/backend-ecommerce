@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
         }
     });
-    // Above indicate the structure for the mysql Database
+    // Above indicate the structure for the mysql Database and the model 
 
     return Products;
 };

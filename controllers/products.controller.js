@@ -3,7 +3,7 @@ const Products = db.products;
 const Op = db.Sequelize.Op;
 const uploadFile = require("../middleware/upload");
 
-// Create and Save a new student
+// Create and Save a new Product
 
 exports.create = async(req, res) => {
   // Validate request
@@ -24,7 +24,7 @@ exports.create = async(req, res) => {
 
     };
 
-    // Save student in the database
+    // Save Product in the database
     Products.create(products)
       .then((data) => {
         res.send(data);
@@ -43,6 +43,7 @@ exports.create = async(req, res) => {
   }
 };
 
+// Finds all products in the DB
 exports.findAll = (req, res) => {
   Products.findAll()
     .then((data) => {
